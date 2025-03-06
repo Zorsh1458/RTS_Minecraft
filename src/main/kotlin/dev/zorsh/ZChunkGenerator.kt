@@ -28,9 +28,9 @@ class ZChunkGenerator : ChunkGenerator() {
         return res
     }
 
-    private fun getVectorNoise(v: Vector): Double {
-        return PerlinNoiseGenerator.getNoise(v.x, v.y, v.z)
-    }
+//    private fun getVectorNoise(v: Vector): Double {
+//        return PerlinNoiseGenerator.getNoise(v.x, v.y, v.z)
+//    }
 
     private fun getWorldNoise(x: Double, y: Double, z: Double): Double {
         val height = 64.0
