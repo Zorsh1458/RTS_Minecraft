@@ -1,0 +1,7 @@
+name: ZChunks
+version: 1.0.0
+main: dev.mryd.Main
+authors:
+  - Marayd
+  - Zorsh
+api-version: '1.21'
