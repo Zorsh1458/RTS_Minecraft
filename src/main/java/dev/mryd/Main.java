@@ -2,8 +2,6 @@ package dev.mryd;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
-//import dev.mryd.plasmohook.PlasmoAddon;
-//import dev.mryd.plasmohook.SourceManager;
 import dev.zorsh.*;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
@@ -14,24 +12,13 @@ import org.jetbrains.annotations.NotNull;
 import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.event.PacketListenerPriority;
 import io.github.retrooper.packetevents.factory.spigot.SpigotPacketEventsBuilder;
-//import su.plo.voice.api.server.PlasmoVoiceServer;
 
 public class Main extends JavaPlugin implements Listener {
     @Getter
     public static Main instance;
 
-//    @Getter
-//    public static ZPhysics physicsWorld;
-
     @Getter
     public static ProtocolManager protocolManager;
-
-//    @Getter
-//    private static boolean isPlasmoVoice = false;
-
-//    @Getter
-//    private PlasmoAddon addon = new PlasmoAddon();
-
 
     @Override
     public void onLoad() {
@@ -49,13 +36,6 @@ public class Main extends JavaPlugin implements Listener {
 
         Structures.generateStructures(10);
 
-//        if (Bukkit.getPluginManager().getPlugin("PlasmoVoice") != null) {
-//            isPlasmoVoice = true;
-//            PlasmoVoiceServer.getAddonsLoader().load(addon);
-//        } else {
-//            getLogger().warning("It looks like you haven't installed \"PlasmoVoice\" on your server, plugin wont be disabled, but will have restricted in functionality ");
-//        }
-
         protocolManager = ProtocolLibrary.getProtocolManager();
 //        getCommand("physics").setExecutor(new ZPhysicsCommand());
 //        getCommand("physics").setTabCompleter(new ZPhysicsCommand());
@@ -64,10 +44,6 @@ public class Main extends JavaPlugin implements Listener {
 //        getCommand("map").setTabCompleter(new MapGiveCommand());
 
         getLogger().info("Plugin enabled");
-//         Bukkit.getPluginManager().registerEvents(new ZPhysicsListener(), this);
-//         worker.registerCommands("dev.mryd.commands");
-//         worker.registerListeners("dev.zorsh.listeners");
-//         Physics.spawnDisplayEntity(new Location(Bukkit.getWorld("world"), 0, 100, 0));
     }
 
     @Override
