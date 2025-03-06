@@ -1,7 +1,11 @@
-name: ZChunks
+name: RTSMinecraft
 version: 1.0.0
 main: dev.mryd.Main
 authors:
   - Marayd
   - Zorsh
 api-version: '1.21'
+commands:
+  rts:
+    description: RTS Admin command
+    permission: op
