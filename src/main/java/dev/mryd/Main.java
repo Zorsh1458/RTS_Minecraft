@@ -35,24 +35,25 @@ public class Main extends JavaPlugin implements Listener {
         //Initialize!
 //        PacketEvents.getAPI().init();
 
-        Structures.generateStructures(10);
 
         protocolManager = ProtocolLibrary.getProtocolManager();
         Objects.requireNonNull(getCommand("rts")).setExecutor(new RTSCommands());
         Objects.requireNonNull(getCommand("rts")).setTabCompleter(new RTSCommands());
 
         getLogger().info("RTS Minecraft plugin enabled");
+
+//        Structures.generateStructures(10);
+        RTSManager.startMainLoop();
     }
 
-//    @Override
-//    public void onDisable() {
-//        //Terminate the instance (clean up process)
-//        PacketEvents.getAPI().terminate();
-//    }
+    @Override
+    public void onDisable() {
+        RTSManager.clearData();
+    }
 
     @Override
     public ChunkGenerator getDefaultWorldGenerator(@NotNull String worldName, String id) {
         getLogger().info("[Zet Corporation] ZChunks is used!");
-        return new ZChunkGenerator(); // Return an instance of the chunk generator we want to use.
+        return new ZChunkGenerator();
     }
 }

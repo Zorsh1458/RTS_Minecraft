@@ -2,8 +2,11 @@ package dev.zorsh
 
 import com.comphenix.protocol.PacketType
 import com.comphenix.protocol.events.PacketContainer
+import com.github.retrooper.packetevents.wrapper.play.server.WrapperPlayServerEntityTeleport
 import dev.mryd.Main
+import it.unimi.dsi.fastutil.ints.IntArrayList
 import org.bukkit.Location
+import org.bukkit.Material
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
 import org.bukkit.util.Vector
@@ -12,10 +15,51 @@ import java.util.*
 import kotlin.math.max
 import kotlin.math.min
 
+
 private class Storage {
     companion object {
         var entityId = 20000
     }
+}
+
+fun applyFogOfWar(entityId: Int, player: Player) {
+    val packet: PacketContainer = Main.protocolManager.createPacket(PacketType.Play.Server.ENTITY_METADATA)
+    packet.integers.write(0, entityId)
+    packet.strings.write(0, "s")
+    packet.bytes.write(1, 3)
+    try {
+        Main.protocolManager.sendServerPacket(player, packet)
+    } catch (e: InvocationTargetException) {
+        e.printStackTrace()
+    }
+}
+
+fun removeFakeEntity(entityId: Int, player: Player) {
+    val packet = PacketContainer(PacketType.Play.Server.ENTITY_DESTROY)
+
+    packet.modifier.write(0, IntArrayList(intArrayOf(entityId)))
+
+    try {
+        Main.protocolManager.sendServerPacket(player, packet)
+    } catch (e: InvocationTargetException) {
+        e.printStackTrace()
+    }
+}
+
+fun lookFakeEntity(entityId: Int, yaw: Float, pitch: Float, player: Player): Int {
+    val packet = PacketContainer(PacketType.Play.Server.ENTITY_LOOK)
+
+    packet.integers.write(0, entityId)
+    packet.bytes
+        .write(0, (yaw / 4f * 3f).toInt().toByte())
+        .write(1, (pitch / 4f * 3f).toInt().toByte())
+
+    try {
+        Main.protocolManager.sendServerPacket(player, packet)
+    } catch (e: InvocationTargetException) {
+        e.printStackTrace()
+    }
+    return entityId
 }
 
 fun teleportFakeEntity(entityId: Int, location: Location, player: Player): Int {

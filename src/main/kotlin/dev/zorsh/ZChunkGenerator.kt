@@ -70,7 +70,7 @@ class ZChunkGenerator : ChunkGenerator() {
                             }
                         }
                         else if (y <= getWorldNoise(nx, 0.0, nz)) {
-                            chunkData.setBlock(cx, y, cz, Material.TERRACOTTA)
+                            chunkData.setBlock(cx, y, cz, Material.BROWN_TERRACOTTA)
                         }
                     }
 //                        val facing = Vector(x, y, z) - Vector(0, 128, 0)
