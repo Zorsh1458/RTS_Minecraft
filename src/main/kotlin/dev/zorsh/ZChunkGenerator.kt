@@ -16,6 +16,7 @@ import kotlin.collections.HashMap
 import kotlin.math.abs
 import kotlin.math.floor
 import kotlin.math.pow
+import kotlin.math.round
 
 class ZChunkGenerator : ChunkGenerator() {
 
@@ -43,6 +44,10 @@ class ZChunkGenerator : ChunkGenerator() {
     }
 
     override fun generateNoise(worldInfo: WorldInfo, random: Random, chunkX: Int, chunkZ: Int, chunkData: ChunkData) {
+        val sx1 = round(random.nextDouble() * 13).toInt()+1
+        val sz1 = round(random.nextDouble() * 13).toInt()+1
+        val sx2 = round(random.nextDouble() * 13).toInt()+1
+        val sz2 = round(random.nextDouble() * 13).toInt()+1
         for (cx in 0..15) {
             for (cz in 0..15) {
                 for (y in chunkData.minHeight..chunkData.maxHeight) {
@@ -54,23 +59,39 @@ class ZChunkGenerator : ChunkGenerator() {
                         val nx = x * 0.05 + 1000000.0
                         val ny = y * 0.05 + 1000000.0
                         val nz = z * 0.05 + 1000000.0
-                        if (PerlinNoiseGenerator.getNoise(nx * 50.0, 0.0, nz * 50.0) > 0.95) {
-                            if (y < 280) {
-                                chunkData.setBlock(cx, y, cz, Material.GOLD_BLOCK)
+                        if (y in 95..100) {
+                            if (y == 95) {
+                                chunkData.setBlock(cx, y, cz, Material.SMOOTH_STONE)
+                            } else if (y == 100) {
+                                chunkData.setBlock(cx, y, cz, Material.SMOOTH_STONE)
+                            } else {
+                                if (cx == 0 || cz == 0) {
+                                    if (cx !in sx1..sx1+1 && cz !in sz1..sz1+1) {
+                                        chunkData.setBlock(cx, y, cz, Material.STONE)
+                                    }
+                                }
+                                if (cx == 7 || cz == 7) {
+                                    if (cx !in sx2..sx2+1 && cz !in sz2..sz2+1) {
+                                        chunkData.setBlock(cx, y, cz, Material.COBBLESTONE)
+                                    }
+                                }
                             }
-                        }
-                        else if (PerlinNoiseGenerator.getNoise(nx * 50.0, 0.0, nz * 50.0) > 0.8) {
-                            if (y < 280) {
-                                chunkData.setBlock(cx, y, cz, Material.EMERALD_BLOCK)
+                        } else {
+                            if (PerlinNoiseGenerator.getNoise(nx * 50.0, 0.0, nz * 50.0) > 0.95) {
+                                if (y < 280) {
+                                    chunkData.setBlock(cx, y, cz, Material.GOLD_BLOCK)
+                                }
+                            } else if (PerlinNoiseGenerator.getNoise(nx * 50.0, 0.0, nz * 50.0) > 0.8) {
+                                if (y < 280) {
+                                    chunkData.setBlock(cx, y, cz, Material.EMERALD_BLOCK)
+                                }
+                            } else if (PerlinNoiseGenerator.getNoise(nx * 50.0, 0.0, nz * 50.0) > 0.65) {
+                                if (y < 280) {
+                                    chunkData.setBlock(cx, y, cz, Material.DIAMOND_BLOCK)
+                                }
+                            } else if (y <= getWorldNoise(nx, 0.0, nz)) {
+                                chunkData.setBlock(cx, y, cz, Material.TERRACOTTA)
                             }
-                        }
-                        else if (PerlinNoiseGenerator.getNoise(nx * 50.0, 0.0, nz * 50.0) > 0.65) {
-                            if (y < 280) {
-                                chunkData.setBlock(cx, y, cz, Material.DIAMOND_BLOCK)
-                            }
-                        }
-                        else if (y <= getWorldNoise(nx, 0.0, nz)) {
-                            chunkData.setBlock(cx, y, cz, Material.BROWN_TERRACOTTA)
                         }
                     }
 //                        val facing = Vector(x, y, z) - Vector(0, 128, 0)

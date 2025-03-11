@@ -49,6 +49,7 @@ public class Main extends JavaPlugin implements Listener {
     @Override
     public void onDisable() {
         RTSManager.clearData();
+        NPCManager.clearNpcs();
     }
 
     @Override

@@ -1,6 +1,8 @@
 package dev.zorsh
 
 import dev.mryd.Main
+import net.citizensnpcs.api.CitizensAPI
+import net.citizensnpcs.api.npc.NPC
 import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.Location
 import org.bukkit.command.Command
@@ -11,7 +13,6 @@ import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
 import org.bukkit.scheduler.BukkitRunnable
 import org.bukkit.util.StringUtil
-import org.bukkit.util.Vector
 
 
 class RTSCommands : CommandExecutor, TabCompleter {
@@ -27,6 +28,12 @@ class RTSCommands : CommandExecutor, TabCompleter {
                     }
                     "cleardata" -> {
                         RTSManager.clearData()
+                    }
+                    "npc" -> {
+                        NPCManager.spawnNpc(sender.location)
+                    }
+                    "clearnpc" -> {
+                        NPCManager.clearNpcs()
                     }
                     "test" -> {
                         val entityId = RTSManager.fogOfWarEntity?.entityId ?: return true
@@ -62,10 +69,10 @@ class RTSCommands : CommandExecutor, TabCompleter {
 
     override fun onTabComplete(sender: CommandSender, command: Command, label: String, args: Array<out String>): List<String> {
         if (args.isEmpty()) {
-            return listOf("test", "createfog", "cleardata")
+            return listOf("test", "npc", "clearnpc", "createfog", "cleardata")
         }
 
-        val availableSubCommands = listOf("test", "createfog", "cleardata")
+        val availableSubCommands = listOf("test", "npc", "clearnpc", "createfog", "cleardata")
         return StringUtil.copyPartialMatches(args[0], availableSubCommands, mutableListOf())
     }
 }

@@ -1,6 +1,7 @@
 name: RTSMinecraft
 version: 1.0.0
 main: dev.mryd.Main
+depend: [ProtocolLib, Citizens]
 authors:
   - Marayd
   - Zorsh
